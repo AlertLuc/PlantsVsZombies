@@ -3,10 +3,17 @@
 
 #include "PlantsBullet.h"
 #include "Zombies2DCharacter.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 void APlantsBullet::SetAttacking(const int PlantAttacking)
 {
 	Attacking = PlantAttacking;
+}
+
+void APlantsBullet::BeginPlay()
+{
+	Super::BeginPlay();
+	ProjectileMovementComponent->InitialSpeed = 100;
 }
 
 void APlantsBullet::NotifyActorBeginOverlap(AActor* OtherActor)

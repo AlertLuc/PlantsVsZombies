@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "PaperSpriteActor.h"
+#include "ProjectileMovementComponent.generated.h"
 #include "PlantsBullet.generated.h"
 
 /**
@@ -16,11 +17,18 @@ class PLANTSVSZOMBIES_API APlantsBullet : public APaperSpriteActor
 
 public:
 
+
+	UPROPERTY(VisibleAnywhere)
+	UProjectileMovementComponent* ProjectileMovementComponent;
+
+
 	UFUNCTION(BlueprintCallable, Category = "PlantBullet")
 	virtual void SetAttacking(const int PlantAttacking);
 
 
 	/* ÖØÐ´º¯Êý */
+
+	virtual void BeginPlay() override;
 
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 

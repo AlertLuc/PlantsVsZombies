@@ -13,5 +13,11 @@ UCLASS()
 class PLANTSVSZOMBIES_API APea2DCharacter : public APlants2DCharacter
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+	AActor* PeaBulletClass {};
+
+	virtual void OnPlantsAttacking_Implementation() override;
 };
