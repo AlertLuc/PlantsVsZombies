@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "PaperSpriteActor.h"
-#include "ProjectileMovementComponent.generated.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 #include "PlantsBullet.generated.h"
 
 /**
@@ -16,10 +16,13 @@ class PLANTSVSZOMBIES_API APlantsBullet : public APaperSpriteActor
 	GENERATED_BODY()
 
 public:
-
-
 	UPROPERTY(VisibleAnywhere)
 	UProjectileMovementComponent* ProjectileMovementComponent;
+
+	APlantsBullet() : ProjectileMovementComponent(CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent")))
+	{
+		ProjectileMovementComponent->InitialSpeed = 100;
+	}
 
 
 	UFUNCTION(BlueprintCallable, Category = "PlantBullet")
