@@ -3,6 +3,25 @@
 
 #include "Zombies2DCharacter.h"
 #include "Plants2DCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
+void AZombies2DCharacter::Walk()
+{
+	if (!(bIsEat || bIsDie))
+	{
+		Move();
+	}
+	else
+	{
+		Stop();
+	}
+}
+
+void AZombies2DCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	Walk();
+}
 
 void AZombies2DCharacter::BeginPlay()
 {
@@ -34,6 +53,16 @@ void AZombies2DCharacter::NotifyActorEndOverlap(AActor* OtherActor)
 	}
 }
 
+void AZombies2DCharacter::OnZombiesEat_Implementation(bool IsEat)
+{
+	bIsEat = IsEat;
+}
+
+void AZombies2DCharacter::OnZombiesDie_Implementation(bool IsDie)
+{
+	bIsDie = IsDie;
+}
+
 void AZombies2DCharacter::OnZombiesOverlapPlants(APlants2DCharacter* Plants2DCharacter, bool Overlap)
 {
 	// ÉèÖÃÖØµþ×´Ì¬
@@ -53,6 +82,12 @@ void AZombies2DCharacter::HandlePlantsAttack(const int PlantsAttacking)
 	}
 }
 
+void AZombies2DCharacter::OnCarCollision()
+{
+	Health = 0;
+	OnZombiesDie(true);
+}
+
 void AZombies2DCharacter::TickZombiesEat() const
 {
 	if (bZombiesOverlapPlants)
@@ -61,4 +96,10 @@ void AZombies2DCharacter::TickZombiesEat() const
 
 void AZombies2DCharacter::Move()
 {
+	AddMovementInput(-GetActorForwardVector());
+}
+
+void AZombies2DCharacter::Stop()
+{
+	GetCharacterMovement()->StopMovementImmediately();
 }

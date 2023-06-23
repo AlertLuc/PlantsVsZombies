@@ -38,8 +38,15 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	int AttackSpeed = 4;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool bIsDie = false;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool bIsEat = false;
 
 	/* 重写函数 */
+
+	virtual void Tick(float DeltaSeconds) override;
 
 	virtual void BeginPlay() override;
 
@@ -52,16 +59,18 @@ public:
 
 	/* 事件 */
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Zombies")
+	UFUNCTION(BlueprintNativeEvent, Category = "Zombies")
 	void OnZombiesEat(bool IsEat);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Zombies")
+	UFUNCTION(BlueprintNativeEvent, Category = "Zombies")
 	void OnZombiesDie(bool IsDie);
 
 	UFUNCTION(BlueprintCallable, Category = "Zombies")
 	void OnZombiesOverlapPlants(APlants2DCharacter* Plants2DCharacter, bool Overlap);
 
 	void HandlePlantsAttack(int PlantsAttacking);
+
+	void OnCarCollision();
 
 	/* 定时事件 */
 
@@ -72,6 +81,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Zombies")
 	void Move();
+
+	UFUNCTION(BlueprintCallable, Category = "Zombies")
+	void Stop();
+
+	UFUNCTION(BlueprintCallable, Category = "Zombies")
+	void Walk();
 
 private:
 
