@@ -2,17 +2,17 @@
 
 
 #include "Pea2DCharacter.h"
-#include "PlantsBullet.h"
+#include "PlantsBullet2DCharacter.h"
 #include "Components/ArrowComponent.h"
 
 void APea2DCharacter::OnPlantsAttacking_Implementation()
 {
-	if(!PeaBulletClass->IsAsset())
+	if(!BeanPaperZDCharacterClass->IsAsset())
 		return;
 
-	if(APlantsBullet* BulletActor = GWorld->SpawnActor<APlantsBullet>(*PeaBulletClass, 
+	if(APlantsBullet2DCharacter* BulletActor = GWorld->SpawnActor<APlantsBullet2DCharacter>(*BeanPaperZDCharacterClass,
 		GetArrowComponent()->GetComponentLocation(),
-		GetArrowComponent()->GetComponentRotation()))
+		{ 0.,0.,-90. }))
 	{
 		BulletActor->SetActorRotation({ 0.,0.,-90. });
 		BulletActor->SetAttacking(Attacking);

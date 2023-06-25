@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "PaperZDCharacter.h"
-#include "Components/SphereComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "Car2DCharacter.generated.h"
 
 /**

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Plants2DCharacter.h"
-#include "PlantsBullet.h"
+#include "PlantsBullet2DCharacter.h"
 #include "Pea2DCharacter.generated.h"
 
 /**
@@ -18,7 +18,7 @@ class PLANTSVSZOMBIES_API APea2DCharacter : public APlants2DCharacter
 public:
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
-	TSubclassOf<APlantsBullet> PeaBulletClass{};
+	TSubclassOf<APlantsBullet2DCharacter> BeanPaperZDCharacterClass{};
 
 	virtual void OnPlantsAttacking_Implementation() override;
 };

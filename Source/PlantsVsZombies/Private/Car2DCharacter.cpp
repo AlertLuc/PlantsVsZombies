@@ -28,7 +28,7 @@ void ACar2DCharacter::NotifyActorBeginOverlap(AActor* OtherActor)
 		bIsRun = true;
 		Zombies->OnCarCollision();
 		if (!CarDestroyTimer.IsValid()) {
-			GetWorld()->GetTimerManager().SetTimer(CarDestroyTimer, this, &ACar2DCharacter::DestroyCar, 30);
+			GetWorld()->GetTimerManager().SetTimer(CarDestroyTimer, this, &ACar2DCharacter::DestroyCar, 3);
 		}
 	}
 }
