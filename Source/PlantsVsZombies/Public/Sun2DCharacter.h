@@ -22,11 +22,9 @@ public:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void NotifyActorOnClicked(FKey ButtonPressed) override;
 
-	UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION(BlueprintImplementableEvent)
 	void SunAdd();
-
-	void SunAdd_Implementation();
-
+	
 	UFUNCTION(BlueprintCallable)
 	void SunFull(bool bIsFull);
 
