@@ -46,10 +46,6 @@ void ASun2DCharacter::NotifyActorOnClicked(FKey ButtonPressed)
 	GWorld->GetTimerManager().SetTimer(MoveTimer, this, &ASun2DCharacter::SunMoveTick, 0.01, true);
 }
 
-void ASun2DCharacter::SunAdd_Implementation()
-{
-}
-
 void ASun2DCharacter::SunFull(bool bIsFull)
 {
 	if (bIsFull) 
