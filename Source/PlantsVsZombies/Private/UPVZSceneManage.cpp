@@ -1,9 +1,9 @@
 ﻿#include "UPVZSceneManage.h"
 
 
-FVector APvzSceneManage::StandardizeToGrid(const FVector& Position) const
+FVector APvzSceneManage::CheckPlantGrid(const FVector& Position, UPARAM(ref) bool& IsGrow, UPARAM(ref) int& IndexX, UPARAM(ref) int& IndexY) const
 {
-	auto i = int(), j = int();
+	int i = -1, j = -1;
 	for (auto k = size_t(); k < std::size(XAxis); ++k) 
 	{
 		if(UKismetMathLibrary::NearlyEqual_FloatFloat(Position.X, XAxis[k], 40.))
@@ -19,7 +19,25 @@ FVector APvzSceneManage::StandardizeToGrid(const FVector& Position) const
 			break;
 		}
 	}
-	return { XAxis[i],YAxis[j],10. };
+	if (i == -1 || j == -1)
+	{
+		IsGrow = false;
+		return {};
+	}
+	if(HavePlants[i][j])
+	{
+		IsGrow = false;
+		return {};
+	}
+	IsGrow = true;
+	IndexX = i;
+	IndexY = j;
+	return { XAxis[i], YAxis[j], 10. };
+}
+
+void APvzSceneManage::GrowPlant(int IndexX, int IndexY)
+{
+	HavePlants[IndexX][IndexY] = true;
 }
 
 void APvzSceneManage::SpwanZombiesType(const TSubclassOf<AZombies2DCharacter> ZombiesPaperZDCharacterClass) const
@@ -48,11 +66,13 @@ void APvzSceneManage::SpawnZombies()
 	SpwanZombiesType(ZombiesPaperZDCharacterClassArray[ZombiesType]);
 }
 
-APvzSceneManage* APvzSceneManage::GetSingletonObjectIns() {
-	if (SingletonObject == nullptr) {
-		SingletonObject = NewObject<APvzSceneManage>();
+APvzSceneManage* APvzSceneManage::GetInstance() {
+	if (GEngine)
+	{
+		APvzSceneManage* Instance = Cast<APvzSceneManage>(GEngine->GameSingleton);
+		return Instance;
 	}
-	return SingletonObject;
+	return nullptr;
 }
 
 void APvzSceneManage::BeginPlay()

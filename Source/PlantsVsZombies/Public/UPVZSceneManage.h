@@ -15,7 +15,10 @@ public:
 		TArray<TSubclassOf<AZombies2DCharacter>> ZombiesPaperZDCharacterClassArray;
 
 	UFUNCTION(BlueprintCallable)
-	FVector StandardizeToGrid(const FVector& Position) const;
+	FVector CheckPlantGrid(const FVector& Position, UPARAM(ref) bool& IsGrow, UPARAM(ref) int& IndexX, UPARAM(ref) int& IndexY)const;
+
+	UFUNCTION(BlueprintCallable)
+	void GrowPlant(int IndexX,int IndexY);
 
 	UFUNCTION(BlueprintCallable)
 	void SpwanZombiesType(const TSubclassOf<AZombies2DCharacter> ZombiesPaperZDCharacterClass)const;
@@ -25,23 +28,24 @@ public:
 
 
 	UFUNCTION(BlueprintCallable)
-	static APvzSceneManage* GetSingletonObjectIns();
+	static APvzSceneManage* GetInstance();
 
 	virtual void BeginPlay() override;
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
-	inline static APvzSceneManage* SingletonObject = nullptr;
 
 	FTimerHandle SpawnZombiesTimer{};
 
 	const double XAxis[9] = {
-	-385., -325., -265., -205., -145., -85., -25., 45., 105.
+	-410., -330., -250., -170., -90., -10., 70., 150., 230.
 	};
 	const double YAxis[5] = {
-		-155., -75., 15., 95., 175.
+		-160., -60., 40., 140., 240.
 	};
+
+	bool HavePlants[9][5] = { false };
 
 	const double ZombiesSpawnX = 420.;
 };
