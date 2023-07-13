@@ -21,6 +21,9 @@ public:
 	void GrowPlant(int IndexX,int IndexY);
 
 	UFUNCTION(BlueprintCallable)
+	void RemovePlant(int IndexX, int IndexY);
+
+	UFUNCTION(BlueprintCallable)
 	void SpwanZombiesType(const TSubclassOf<AZombies2DCharacter> ZombiesPaperZDCharacterClass)const;
 
 	UFUNCTION(BlueprintCallable)

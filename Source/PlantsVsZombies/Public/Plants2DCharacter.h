@@ -36,7 +36,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	bool bPlantsAttacking = false;
 
-
 	/* 重写函数 */
 
 	virtual void BeginPlay() override;
@@ -45,6 +44,8 @@ public:
 
 
 	/* 事件 */
+	UFUNCTION(BlueprintCallable, Category = "Plants")
+	void SetGrowGrid(int GridX, int GridY);
 
 	UFUNCTION(BlueprintCallable, Category = "Plants")
 	void OnPlantsDie(bool IsDie);
@@ -78,6 +79,7 @@ private:
 
 	bool bPlantCanAttacking = false;
 
-
+	int GrowX = -1;
+	int GrowY = -1;
 
 };

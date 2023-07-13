@@ -3,6 +3,8 @@
 
 #include "Plants2DCharacter.h"
 
+#include "UPVZSceneManage.h"
+
 
 void APlants2DCharacter::BeginPlay()
 {
@@ -16,10 +18,18 @@ void APlants2DCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	Super::EndPlay(EndPlayReason);
 }
 
+void APlants2DCharacter::SetGrowGrid(int GridX, int GridY)
+{
+	GrowX = GridX;
+	GrowY = GridY;
+}
+
 void APlants2DCharacter::OnPlantsDie(bool IsDie)
 {
-	if (IsDie)
+	if (IsDie) {
+		APvzSceneManage::GetInstance()->RemovePlant(GrowX, GrowY);
 		Destroy();
+	}
 }
 
 void APlants2DCharacter::OnPlantsAttacking_Implementation()

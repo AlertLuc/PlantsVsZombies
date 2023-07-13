@@ -40,6 +40,11 @@ void APvzSceneManage::GrowPlant(int IndexX, int IndexY)
 	HavePlants[IndexX][IndexY] = true;
 }
 
+void APvzSceneManage::RemovePlant(int IndexX, int IndexY)
+{
+	HavePlants[IndexX][IndexY] = false;
+}
+
 void APvzSceneManage::SpwanZombiesType(const TSubclassOf<AZombies2DCharacter> ZombiesPaperZDCharacterClass) const
 {
 	const auto SpawnYAxis = UKismetMathLibrary::RandomIntegerInRange(0, std::size(YAxis));
