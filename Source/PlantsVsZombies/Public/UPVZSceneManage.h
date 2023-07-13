@@ -1,9 +1,31 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
-#include "Zombies2DCharacter.h"
-#include "GeometryCollection/GeometryCollectionEngineSizeSpecificUtility.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "UPVZSceneManage.generated.h"
+
+class AZombies2DCharacter;
+class APlants2DCharacter;
+
+USTRUCT(BlueprintType)
+struct FPlantGrid
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	APlants2DCharacter* Plants = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int X = -1;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int Y = -1;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool IsGrow = false;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	FVector GridPosition {};
+};
+
 
 UCLASS(BlueprintType, Blueprintable)
 class APvzSceneManage : public AActor
@@ -12,19 +34,19 @@ class APvzSceneManage : public AActor
 public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		TArray<TSubclassOf<AZombies2DCharacter>> ZombiesPaperZDCharacterClassArray;
+	TArray<TSubclassOf<AZombies2DCharacter>> ZombiesPaperZDCharacterClassArray;
 
 	UFUNCTION(BlueprintCallable)
-	FVector CheckPlantGrid(const FVector& Position, UPARAM(ref) bool& IsGrow, UPARAM(ref) int& IndexX, UPARAM(ref) int& IndexY)const;
+	FPlantGrid CheckPlantGrid(const FVector& Position)const;
 
 	UFUNCTION(BlueprintCallable)
-	void GrowPlant(int IndexX,int IndexY);
+	void GrowPlant(int X, int Y, APlants2DCharacter* Plants);
 
 	UFUNCTION(BlueprintCallable)
-	void RemovePlant(int IndexX, int IndexY);
+	void RemovePlant(int X, int Y);
 
 	UFUNCTION(BlueprintCallable)
-	void SpwanZombiesType(const TSubclassOf<AZombies2DCharacter> ZombiesPaperZDCharacterClass)const;
+	void SpawnZombiesType(const TSubclassOf<AZombies2DCharacter> ZombiesPaperZDCharacterClass)const;
 
 	UFUNCTION(BlueprintCallable)
 	void SpawnZombies();
@@ -48,7 +70,7 @@ private:
 		-160., -60., 40., 140., 240.
 	};
 
-	bool HavePlants[9][5] = { false };
+	APlants2DCharacter* GrowPlants[9][5] = { nullptr };
 
 	const double ZombiesSpawnX = 420.;
 };

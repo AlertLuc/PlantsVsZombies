@@ -1,57 +1,62 @@
 ﻿#include "UPVZSceneManage.h"
 
+#include "Zombies2DCharacter.h"
+#include "Kismet/KismetMathLibrary.h"
 
-FVector APvzSceneManage::CheckPlantGrid(const FVector& Position, UPARAM(ref) bool& IsGrow, UPARAM(ref) int& IndexX, UPARAM(ref) int& IndexY) const
+
+FPlantGrid APvzSceneManage::CheckPlantGrid(const FVector& Position) const
 {
-	int i = -1, j = -1;
-	for (auto k = size_t(); k < std::size(XAxis); ++k) 
+	FPlantGrid PlantGrid{};
+
+	for (auto i = size_t(); i < std::size(XAxis); ++i) 
 	{
-		if(UKismetMathLibrary::NearlyEqual_FloatFloat(Position.X, XAxis[k], 40.))
+		if(UKismetMathLibrary::NearlyEqual_FloatFloat(Position.X, XAxis[i], 40.))
 		{
-			i = k;
+			PlantGrid.X = i;
 			break;
 		}
 	}
-	for (auto k = size_t(); k < std::size(YAxis); ++k) {
-		if (UKismetMathLibrary::NearlyEqual_FloatFloat(Position.Y, YAxis[k], 50.))
+	for (auto i = size_t(); i < std::size(YAxis); ++i) {
+		if (UKismetMathLibrary::NearlyEqual_FloatFloat(Position.Y, YAxis[i], 50.))
 		{
-			j = k;
+			PlantGrid.Y = i;
 			break;
 		}
 	}
-	if (i == -1 || j == -1)
+	// 不在格子里
+	if (PlantGrid.X == -1 || PlantGrid.Y == -1)
 	{
-		IsGrow = false;
-		return {};
+		return PlantGrid;
 	}
-	if(HavePlants[i][j])
+	PlantGrid.GridPosition = { XAxis[PlantGrid.X], YAxis[PlantGrid.Y], 10. };
+	// 是否长了植物
+	if(!GrowPlants[PlantGrid.X][PlantGrid.Y])
 	{
-		IsGrow = false;
-		return {};
+		return PlantGrid;
 	}
-	IsGrow = true;
-	IndexX = i;
-	IndexY = j;
-	return { XAxis[i], YAxis[j], 10. };
+
+	PlantGrid.IsGrow = true;
+
+	return PlantGrid;
 }
 
-void APvzSceneManage::GrowPlant(int IndexX, int IndexY)
+void APvzSceneManage::GrowPlant(int X, int Y, APlants2DCharacter* Plants)
 {
-	HavePlants[IndexX][IndexY] = true;
+	GrowPlants[X][Y] = Plants;
 }
 
-void APvzSceneManage::RemovePlant(int IndexX, int IndexY)
+void APvzSceneManage::RemovePlant(int X, int Y)
 {
-	HavePlants[IndexX][IndexY] = false;
+	GrowPlants[X][Y] = nullptr;
 }
 
-void APvzSceneManage::SpwanZombiesType(const TSubclassOf<AZombies2DCharacter> ZombiesPaperZDCharacterClass) const
+void APvzSceneManage::SpawnZombiesType(const TSubclassOf<AZombies2DCharacter> ZombiesPaperZDCharacterClass) const
 {
 	const auto SpawnYAxis = UKismetMathLibrary::RandomIntegerInRange(0, std::size(YAxis));
-	const FVector SpwanPosition{ ZombiesSpawnX,YAxis[SpawnYAxis],10. };
+	const FVector SpawnPosition{ ZombiesSpawnX, YAxis[SpawnYAxis], 10. };
 
 	if (const AZombies2DCharacter* ZombiesActor = GWorld->SpawnActor<AZombies2DCharacter>(*ZombiesPaperZDCharacterClass,
-		SpwanPosition,
+		SpawnPosition,
 		{ 0.,0.,-90. }); ZombiesActor)
 	{
 	}
@@ -68,7 +73,7 @@ void APvzSceneManage::SpawnZombies()
 		return;
 
 	const auto ZombiesType = UKismetMathLibrary::RandomIntegerInRange(0, ZombiesPaperZDCharacterClassArray.Num());
-	SpwanZombiesType(ZombiesPaperZDCharacterClassArray[ZombiesType]);
+	SpawnZombiesType(ZombiesPaperZDCharacterClassArray[ZombiesType]);
 }
 
 APvzSceneManage* APvzSceneManage::GetInstance() {
