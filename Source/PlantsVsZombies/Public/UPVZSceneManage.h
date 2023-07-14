@@ -32,8 +32,6 @@ class APvzSceneManage : public AActor
 {
 	GENERATED_BODY()
 public:
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<TSubclassOf<AZombies2DCharacter>> ZombiesPaperZDCharacterClassArray;
 
 	UFUNCTION(BlueprintCallable)
@@ -46,31 +44,36 @@ public:
 	void RemovePlant(int X, int Y);
 
 	UFUNCTION(BlueprintCallable)
-	void SpawnZombiesType(const TSubclassOf<AZombies2DCharacter> ZombiesPaperZDCharacterClass)const;
+	void RemoveZombies(int Y);
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnZombiesType(const TSubclassOf<AZombies2DCharacter> ZombiesPaperZDCharacterClass);
 
 	UFUNCTION(BlueprintCallable)
 	void SpawnZombies();
 
-
 	UFUNCTION(BlueprintCallable)
 	static APvzSceneManage* GetInstance();
 
-	virtual void BeginPlay() override;
+	UFUNCTION(BlueprintCallable)
+	void OnBegin(const TArray<TSubclassOf<AZombies2DCharacter>>& ZombiesClassArray);
 
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	UFUNCTION(BlueprintCallable)
+	void OnEnd();
 
 private:
 
 	FTimerHandle SpawnZombiesTimer{};
 
-	const double XAxis[9] = {
+	const double XGrid[9] = {
 	-410., -330., -250., -170., -90., -10., 70., 150., 230.
 	};
-	const double YAxis[5] = {
+	const double GridY[5] = {
 		-160., -60., 40., 140., 240.
 	};
 
-	APlants2DCharacter* GrowPlants[9][5] = { nullptr };
+	APlants2DCharacter* GrowPlants[9][5];
+	int ZombiesNum[5];
 
-	const double ZombiesSpawnX = 420.;
+	const double ZombiesSpawnGridX = 420.;
 };

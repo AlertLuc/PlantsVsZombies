@@ -2,6 +2,8 @@
 
 
 #include "PlantsBullet2DCharacter.h"
+
+#include "PvzFunctionLibrary.h"
 #include "Zombies2DCharacter.h"
 
 void APlantsBullet2DCharacter::SetAttacking(const int PlantAttacking)
@@ -11,7 +13,7 @@ void APlantsBullet2DCharacter::SetAttacking(const int PlantAttacking)
 
 void APlantsBullet2DCharacter::Move()
 {
-	AddMovementInput(GetActorForwardVector());
+	UPvzFunctionLibrary::MoveActor(this, GetActorForwardVector(), 1.0);
 }
 
 void APlantsBullet2DCharacter::Tick(float DeltaSeconds)

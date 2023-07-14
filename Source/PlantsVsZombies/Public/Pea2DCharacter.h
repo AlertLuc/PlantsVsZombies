@@ -15,6 +15,8 @@ class PLANTSVSZOMBIES_API APea2DCharacter : public APlants2DCharacter
 {
 	GENERATED_BODY()
 
+	FVector BulletSpawnPosition = {20.,-20., 30.};
+
 public:
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)

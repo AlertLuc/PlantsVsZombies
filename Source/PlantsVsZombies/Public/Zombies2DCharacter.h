@@ -88,6 +88,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Zombies")
 	void Walk();
 
+	UFUNCTION(BlueprintCallable, Category = "Zombies")
+	void SetGridY(int Y);
+
 private:
 
 
@@ -105,4 +108,6 @@ private:
 	/* ÄÚ²¿×´Ì¬ */
 
 	bool bZombiesOverlapPlants = false;
+
+	int GridY = -1;
 };

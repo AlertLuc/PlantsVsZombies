@@ -3,6 +3,8 @@
 
 #include "Zombies2DCharacter.h"
 #include "Plants2DCharacter.h"
+#include "PvzFunctionLibrary.h"
+#include "UPVZSceneManage.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 void AZombies2DCharacter::Walk()
@@ -15,6 +17,11 @@ void AZombies2DCharacter::Walk()
 	{
 		Stop();
 	}
+}
+
+void AZombies2DCharacter::SetGridY(int Y)
+{
+	GridY = Y;
 }
 
 void AZombies2DCharacter::Tick(float DeltaSeconds)
@@ -61,6 +68,8 @@ void AZombies2DCharacter::OnZombiesEat_Implementation(bool IsEat)
 void AZombies2DCharacter::OnZombiesDie_Implementation(bool IsDie)
 {
 	bIsDie = IsDie;
+	if(bIsDie)
+		APvzSceneManage::GetInstance()->RemoveZombies(GridY);
 }
 
 void AZombies2DCharacter::OnZombiesOverlapPlants(APlants2DCharacter* Plants2DCharacter, bool Overlap)
@@ -96,7 +105,7 @@ void AZombies2DCharacter::TickZombiesEat() const
 
 void AZombies2DCharacter::Move()
 {
-	AddMovementInput(-GetActorForwardVector());
+	UPvzFunctionLibrary::MoveActor(this, -GetActorForwardVector(), 0.1);
 }
 
 void AZombies2DCharacter::Stop()
