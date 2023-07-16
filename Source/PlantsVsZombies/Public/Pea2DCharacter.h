@@ -14,11 +14,11 @@ UCLASS()
 class PLANTSVSZOMBIES_API APea2DCharacter : public APlants2DCharacter
 {
 	GENERATED_BODY()
-
+	// 子弹发射相对位置
 	FVector BulletSpawnPosition = {20.,-20., 30.};
 
 public:
-
+	// 子弹类型引用
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	TSubclassOf<APlantsBullet2DCharacter> BeanPaperZDCharacterClass{};
 
