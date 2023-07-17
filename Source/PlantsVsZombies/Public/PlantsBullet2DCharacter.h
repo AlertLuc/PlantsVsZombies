@@ -17,7 +17,7 @@ class PLANTSVSZOMBIES_API APlantsBullet2DCharacter : public APaperZDCharacter
 public:
 
 	UPROPERTY(VisibleAnywhere)
-		bool bIsHit = false;
+	bool bIsHit = false;
 
 	UFUNCTION(BlueprintCallable, Category = "Bean")
 	virtual void SetAttacking(const int PlantAttacking);

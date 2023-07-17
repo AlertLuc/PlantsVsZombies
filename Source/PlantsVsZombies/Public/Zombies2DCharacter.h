@@ -18,10 +18,7 @@ class PLANTSVSZOMBIES_API AZombies2DCharacter : public APaperZDCharacter
 	GENERATED_BODY()
 
 public:
-
-
 	/* 属性 */
-
 	// 生命值
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	int Health = 10;
@@ -38,9 +35,11 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	int AttackSpeed = 4;
 
+	// 死亡
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool bIsDie = false;
 
+	// 吃
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool bIsEat = false;
 
@@ -58,10 +57,11 @@ public:
 
 
 	/* 事件 */
-
+	// 吃
 	UFUNCTION(BlueprintNativeEvent, Category = "Zombies")
 	void OnZombiesEat(bool IsEat);
 
+	// 死亡
 	UFUNCTION(BlueprintNativeEvent, Category = "Zombies")
 	void OnZombiesDie(bool IsDie);
 
@@ -78,7 +78,7 @@ public:
 
 
 	/* 方法 */
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Zombies")
 	void Move();
 
@@ -93,20 +93,14 @@ public:
 
 private:
 
-
 	/* 事件声明 */
-
 	DECLARE_EVENT_OneParam(AZombies2DCharacter, ZombiesEat, int)
 	ZombiesEat ZombiesEatEvent;
 
-
 	/* 定时器 */
-
 	FTimerHandle TickZombiesEatTimer;
 
-
 	/* 内部状态 */
-
 	bool bZombiesOverlapPlants = false;
 
 	int GridY = -1;

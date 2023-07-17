@@ -16,5 +16,6 @@ class PLANTSVSZOMBIES_API UPvzFunctionLibrary : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintCallable)
+	// Ëæ»ú×ø±ê
 	static void MoveActor(AActor* Actor, FVector Direction, double Speed);
 };

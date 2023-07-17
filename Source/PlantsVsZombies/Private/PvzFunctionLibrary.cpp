@@ -5,5 +5,6 @@
 
 void UPvzFunctionLibrary::MoveActor(AActor* Actor, FVector Direction, double Speed)
 {
+	// Ëæ»ú×ø±ê
 	Actor->SetActorLocation(Actor->GetActorLocation() + Direction.GetSafeNormal() * Speed);
 }

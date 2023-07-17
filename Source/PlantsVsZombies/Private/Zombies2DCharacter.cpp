@@ -7,6 +7,7 @@
 #include "UPVZSceneManage.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+// ½©Ê¬µÄÐÐ×ß
 void AZombies2DCharacter::Walk()
 {
 	if (!(bIsEat || bIsDie))
@@ -19,6 +20,7 @@ void AZombies2DCharacter::Walk()
 	}
 }
 
+// ½©Ê¬ÐÐ×ß
 void AZombies2DCharacter::SetGridY(int Y)
 {
 	GridY = Y;
@@ -30,6 +32,7 @@ void AZombies2DCharacter::Tick(float DeltaSeconds)
 	Walk();
 }
 
+// ¼ì²â½©Ê¬±»¹¥»÷
 void AZombies2DCharacter::BeginPlay()
 {
 	GetWorld()->GetTimerManager().SetTimer(TickZombiesEatTimer, this, &AZombies2DCharacter::TickZombiesEat, 1.0f / AttackSpeed, true);
@@ -72,6 +75,7 @@ void AZombies2DCharacter::OnZombiesDie_Implementation(bool IsDie)
 		APvzSceneManage::GetInstance()->RemoveZombies(GridY);
 }
 
+// ½©Ê¬ÓëÖ²ÎïÕÛµþ
 void AZombies2DCharacter::OnZombiesOverlapPlants(APlants2DCharacter* Plants2DCharacter, bool Overlap)
 {
 	// ÉèÖÃÖØµþ×´Ì¬
@@ -82,6 +86,8 @@ void AZombies2DCharacter::OnZombiesOverlapPlants(APlants2DCharacter* Plants2DCha
 	ZombiesEatEvent.AddUObject(Plants2DCharacter, &APlants2DCharacter::HandleZombiesEat);
 }
 
+
+// ±»Ö²Îï´òµ½
 void AZombies2DCharacter::HandlePlantsAttack(const int PlantsAttacking)
 {
 	Health -= PlantsAttacking;
@@ -91,23 +97,27 @@ void AZombies2DCharacter::HandlePlantsAttack(const int PlantsAttacking)
 	}
 }
 
+// ±»³µ×²
 void AZombies2DCharacter::OnCarCollision()
 {
 	Health = 0;
 	OnZombiesDie(true);
 }
 
+// ½©Ê¬³ÔÖ²Îï
 void AZombies2DCharacter::TickZombiesEat() const
 {
 	if (bZombiesOverlapPlants)
 		ZombiesEatEvent.Broadcast(Attacking);
 }
 
+// ½©Ê¬ÒÆ¶¯
 void AZombies2DCharacter::Move()
 {
 	UPvzFunctionLibrary::MoveActor(this, -GetActorForwardVector(), 0.1);
 }
 
+// ½©Ê¬ÔÝÍ£
 void AZombies2DCharacter::Stop()
 {
 	GetCharacterMovement()->StopMovementImmediately();

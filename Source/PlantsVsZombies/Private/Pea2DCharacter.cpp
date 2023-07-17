@@ -8,9 +8,11 @@ void APea2DCharacter::OnPlantsAttacking_Implementation()
 {
 	// 是否设置子弹类型
 	if(!BeanPaperZDCharacterClass->IsAsset())
+	{
 		return;
+	}
 
-	// 生成子弹
+	// 生成子弹自身位置
 	if(APlantsBullet2DCharacter* BulletActor = GWorld->SpawnActor<APlantsBullet2DCharacter>(*BeanPaperZDCharacterClass,
 		GetActorLocation() + BulletSpawnPosition,
 		{ 0.,0.,-90. }))

@@ -9,6 +9,7 @@ FPlantGrid APvzSceneManage::CheckPlantGrid(const FVector& Position) const
 {
 	FPlantGrid PlantGrid{};
 
+	// 遍历格子
 	for (auto i = size_t(); i < std::size(XGrid); ++i) 
 	{
 		if(UKismetMathLibrary::NearlyEqual_FloatFloat(Position.X, XGrid[i], 40.))
@@ -17,6 +18,8 @@ FPlantGrid APvzSceneManage::CheckPlantGrid(const FVector& Position) const
 			break;
 		}
 	}
+
+	// 遍历格子
 	for (auto i = size_t(); i < std::size(GridY); ++i) {
 		if (UKismetMathLibrary::NearlyEqual_FloatFloat(Position.Y, GridY[i], 50.))
 		{
@@ -24,12 +27,15 @@ FPlantGrid APvzSceneManage::CheckPlantGrid(const FVector& Position) const
 			break;
 		}
 	}
+
 	// 不在格子里
 	if (PlantGrid.X == -1 || PlantGrid.Y == -1)
 	{
 		return PlantGrid;
 	}
+
 	PlantGrid.GridPosition = { XGrid[PlantGrid.X], GridY[PlantGrid.Y], 10. };
+
 	// 是否长了植物
 	if(PlantGrid.Plants = GrowPlants[PlantGrid.X][PlantGrid.Y]; !PlantGrid.Plants)
 	{
@@ -60,6 +66,7 @@ void APvzSceneManage::RemoveZombies(int Y)
 	{
 		ZombiesY--;
 	}
+
 	if (ZombiesY <= 0)
 	{
 		for (auto i = 0; i < 9; i++)
@@ -112,6 +119,7 @@ APvzSceneManage* APvzSceneManage::GetInstance() {
 
 void APvzSceneManage::OnBegin(const TArray<TSubclassOf<AZombies2DCharacter>>& ZombiesClassArray)
 {
+	// 数组申请内存，初始化
 	memset(GrowPlants, 0, sizeof GrowPlants);
 	memset(ZombiesNum, 0, sizeof ZombiesNum);
 	ZombiesPaperZDCharacterClassArray = ZombiesClassArray;

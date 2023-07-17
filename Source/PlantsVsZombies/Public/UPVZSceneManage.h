@@ -23,6 +23,7 @@ struct FPlantGrid
 	bool IsGrow = false;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 网格位置
 	FVector GridPosition {};
 };
 
@@ -35,23 +36,30 @@ public:
 	TArray<TSubclassOf<AZombies2DCharacter>> ZombiesPaperZDCharacterClassArray;
 
 	UFUNCTION(BlueprintCallable)
+	// 检测植物网格
 	FPlantGrid CheckPlantGrid(const FVector& Position)const;
 
+	// 植物生长位置
 	UFUNCTION(BlueprintCallable)
 	void GrowPlant(int X, int Y, APlants2DCharacter* Plants);
 
+	// 清除植物
 	UFUNCTION(BlueprintCallable)
 	void RemovePlant(int X, int Y);
 
+	// 清除僵尸
 	UFUNCTION(BlueprintCallable)
 	void RemoveZombies(int Y);
 
+	// 产生僵尸类型
 	UFUNCTION(BlueprintCallable)
 	void SpawnZombiesType(const TSubclassOf<AZombies2DCharacter> ZombiesPaperZDCharacterClass);
 
+	// 产生僵尸
 	UFUNCTION(BlueprintCallable)
 	void SpawnZombies();
 
+	// 单例模式，获取管理类
 	UFUNCTION(BlueprintCallable)
 	static APvzSceneManage* GetInstance();
 

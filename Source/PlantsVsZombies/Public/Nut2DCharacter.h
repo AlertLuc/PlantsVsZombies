@@ -15,6 +15,7 @@ class PLANTSVSZOMBIES_API ANut2DCharacter : public APlants2DCharacter
 	GENERATED_BODY()
 
 public:
+	// 坚果生命值
 	ANut2DCharacter()
 	{
 		Health = 100;
